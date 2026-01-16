@@ -10,7 +10,7 @@ int main() {
     read_processes(p, n);
     init_processes(p, n);
 
-    // TODO: Aquí va la lógica del scheduler
+    // TODO: Aquí va la lógica del scheduler PRUEBA PRUEBA
     
     print_results(p, n, "FCFS Scheduling");
     return 0;
