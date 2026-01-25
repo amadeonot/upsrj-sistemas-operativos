@@ -4,16 +4,16 @@
 /* ============================================================
  * Student implementation area
  * ============================================================ */
-void sjf(Process p[], int n)
+void sjf_schedule(Process p[], int n)
 {
     int time = 0;
     int completed = 0;
 
     while (completed < n) {
         int idx = -1;
-        int min_burst = 1e9;
+        int min_burst = 1000000;
 
-        // Buscar el proceso disponible con menor burst_time
+        /* Buscar el proceso disponible con menor tiempo de ráfaga */
         for (int i = 0; i < n; i++) {
             if (!p[i].completed && p[i].arrival_time <= time) {
                 if (p[i].burst_time < min_burst) {
@@ -23,16 +23,17 @@ void sjf(Process p[], int n)
             }
         }
 
-        // Si no hay procesos disponibles, avanzar el tiempo
+        /* Si no hay procesos listos, avanzar el tiempo */
         if (idx == -1) {
             time++;
             continue;
         }
 
-        // Ejecutar el proceso seleccionado
+        /* Ejecutar el proceso seleccionado */
         p[idx].waiting_time = time - p[idx].arrival_time;
         time += p[idx].burst_time;
-        p[idx].turnaround_time = p[idx].waiting_time + p[idx].burst_time;
+        p[idx].turnaround_time =
+            p[idx].waiting_time + p[idx].burst_time;
         p[idx].completed = 1;
         completed++;
     }
@@ -51,6 +52,8 @@ int main(void)
     Process p[n];
     read_processes(p, n);
     init_processes(p, n);
+
+    sjf_schedule(p, n);
 
     print_results(p, n, "SJF Scheduling");
     return 0;
