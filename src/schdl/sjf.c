@@ -13,7 +13,6 @@ void sjf_schedule(Process p[], int n)
         int idx = -1;
         int min_burst = 1000000;
 
-        /* Buscar el proceso disponible con menor tiempo de ráfaga */
         for (int i = 0; i < n; i++) {
             if (!p[i].completed && p[i].arrival_time <= time) {
                 if (p[i].burst_time < min_burst) {
@@ -23,13 +22,11 @@ void sjf_schedule(Process p[], int n)
             }
         }
 
-        /* Si no hay procesos listos, avanzar el tiempo */
         if (idx == -1) {
             time++;
             continue;
         }
 
-        /* Ejecutar el proceso seleccionado */
         p[idx].waiting_time = time - p[idx].arrival_time;
         time += p[idx].burst_time;
         p[idx].turnaround_time =
