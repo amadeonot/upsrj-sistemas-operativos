@@ -6,9 +6,20 @@
  * ============================================================ */
 void fcfs_schedule(Process p[], int n)
 {
-    (void)p;
-    (void)n;
-    /* TODO: Implement FCFS scheduling algorithm here */
+    int time = 0;
+
+    for (int i = 0; i < n; i++) {
+        /* Si el CPU está libre, avanzar el tiempo */
+        if (time < p[i].arrival_time) {
+            time = p[i].arrival_time;
+        }
+
+        /* Calcular métricas */
+        p[i].waiting_time = time - p[i].arrival_time;
+        time += p[i].burst_time;
+        p[i].turnaround_time = p[i].waiting_time + p[i].burst_time;
+        p[i].completed = 1;
+    }
 }
 
 /* ============================================================
@@ -25,37 +36,9 @@ int main(void)
     read_processes(p, n);
     init_processes(p, n);
 
-    /* FCFS Scheduling */
-
-    // Ordenar por tiempo de llegada
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = i + 1; j < n; j++) {
-            if (p[i].arrival_time > p[j].arrival_time) {
-                Process temp = p[i];
-                p[i] = p[j];
-                p[j] = temp;
-            }
-        }
-    }
-
-    int current_time = 0;
-
-    for (int i = 0; i < n; i++) {
-        if (current_time < p[i].arrival_time) {
-            current_time = p[i].arrival_time;
-        }
-
-        p[i].waiting_time = current_time - p[i].arrival_time;
-        p[i].turnaround_time = p[i].waiting_time + p[i].burst_time;
-
-        current_time += p[i].burst_time;
-        p[i].completed = 1;
-    }
+    fcfs_schedule(p, n);
 
     print_results(p, n, "FCFS Scheduling");
     return 0;
 }
-<<<<<<< HEAD
-=======
 #endif
->>>>>>> e295d968ed0cea49e0d03f3c31992a399f5359b8
