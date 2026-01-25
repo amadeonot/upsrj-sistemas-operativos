@@ -17,4 +17,9 @@ void read_processes(Process p[], int n);
 void init_processes(Process p[], int n);
 void print_results(Process p[], int n, const char *title);
 
+// ===== DECLARACIONES DE ALGORITMOS (OBLIGATORIAS PARA LOS TESTS) =====
+void fcfs_schedule(Process p[], int n);
+void sjf_schedule(Process p[], int n);
+void rr_schedule(Process p[], int n, int quantum);
+
 #endif
